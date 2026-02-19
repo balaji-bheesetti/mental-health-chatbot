@@ -29,7 +29,7 @@ A smart chatbot designed to provide **mental health support** by combining **emo
 - **Database:** MongoDB (via Flask-PyMongo)
 - **Authentication:** Flask-Login
 - **AI/ML:** OpenCV + NumPy for emotion detection
-- **APIs:** Requests (for fetching resources/recommendations)
+- **APIs:** Requests, GrokAI
 
 ---
 
