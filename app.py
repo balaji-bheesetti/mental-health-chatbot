@@ -28,23 +28,16 @@ from flask_login import (
     current_user,
 )
 import secrets
-<<<<<<< HEAD
 from dotenv import load_dotenv
 
 load_dotenv()
-=======
->>>>>>> 86e2e5c85926c5a4d692c6334139956d53e45b62
 
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
 # MongoDB setup
-<<<<<<< HEAD
 app.config["MONGO_URI"] = os.getenv("MONGO_URL")
-=======
-app.config["MONGO_URI"] = "mongodb://localhost:27017/mental_health_app"
->>>>>>> 86e2e5c85926c5a4d692c6334139956d53e45b62
 mongo = PyMongo(app)
 
 # Login manager setup
@@ -52,12 +45,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-# API Key for chatbot (replace with your actual API key)
-<<<<<<< HEAD
+# API Key for chatbot
 API_KEY = os.getenv("GROK_API_KEY")
-=======
-API_KEY = "your_api_key_here"
->>>>>>> 86e2e5c85926c5a4d692c6334139956d53e45b62
 
 
 # User class for Flask-Login
@@ -173,7 +162,6 @@ def process_chat():
     message = data.get("message", "")
     emotion = data.get("emotion", "")
 
-    # Process the message based on emotion or direct input
     if emotion:
         response = get_chatbot_response(emotion)
     else:
@@ -196,10 +184,8 @@ def process_emotion():
     nparr = np.frombuffer(image_bytes, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    # Detect emotion using OpenCV
     detected_emotion = detect_emotion(img)
 
-    # Get therapy suggestion based on detected emotion
     therapy = get_therapy_suggestion(detected_emotion)
 
     return jsonify({"emotion": detected_emotion, "therapy": therapy})
@@ -233,7 +219,6 @@ def community():
 @app.route("/community/room/<room_id>")
 @login_required
 def chat_room(room_id):
-    """Display a specific chat room with messages"""
     room = mongo.db.chat_rooms.find_one({"_id": ObjectId(room_id)})
     if not room:
         flash("Room not found")
@@ -347,10 +332,7 @@ def send_message():
             )
     return redirect(url_for("chat_room", room_id=room_id))
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 86e2e5c85926c5a4d692c6334139956d53e45b62
 @app.route("/community/create_room", methods=["GET", "POST"])
 @login_required
 def create_room():
@@ -368,7 +350,6 @@ def create_room():
             }
             result = mongo.db.chat_rooms.insert_one(new_room)
 
-            # Automatically add creator as a member
             membership = {
                 "room_id": str(result.inserted_id),
                 "user_id": current_user.id,
@@ -417,7 +398,6 @@ def edit_profile():
         return render_template("edit_profile.html", user=user)
     return redirect(url_for("dashboard"))
 
-<<<<<<< HEAD
 
 def get_chatbot_response(input_text):
     try:
@@ -454,22 +434,17 @@ def get_chatbot_response(input_text):
 
 def detect_emotion(image):
 
-    # Convert to grayscale for face detection
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     face_cascade = cv2.CascadeClassifier(
         cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
     )
 
-    # Detect faces
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
-    # return neutral if no face detected,
     if len(faces) == 0:
         return "neutral"
 
-    # Placeholder - in reality, you'd use a model like FER (Facial Emotion Recognition)
-    # For this example, return a random emotion
     emotions = ["happy", "sad", "angry", "anxious", "neutral"]
     import random
 
