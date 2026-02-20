@@ -34,7 +34,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
+app.secret_key = os.getenv("SECURITY_KEY")
 
 # MongoDB Atlas setup
 MONGO_URI = os.getenv("MONGO_URL")
