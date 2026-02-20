@@ -17,7 +17,7 @@ from datetime import datetime
 import requests
 import base64
 import re
-from flask_pymongo import PyMongo
+from pymongo.mongo_client import MongoClient
 from bson.objectid import ObjectId
 from flask_login import (
     LoginManager,
@@ -36,9 +36,9 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-# MongoDB setup
-app.config["MONGO_URI"] = os.getenv("MONGO_URL")
-mongo = PyMongo(app)
+# MongoDB Atlas setup
+MONGO_URI = os.getenv("MONGO_URL")
+mongo = MongoClient(MONGO_URI)
 
 # Login manager setup
 login_manager = LoginManager()
