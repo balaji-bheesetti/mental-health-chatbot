@@ -5,12 +5,14 @@ colorama==0.4.6
 dnspython==1.16.0
 Flask==2.0.1
 Flask-Login==0.5.0
+gunicorn==25.1.0
 idna==3.11
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.3
 numpy==2.4.2
 opencv-python-headless==4.13.0.92
+packaging==26.0
 pymongo==3.11.0
 python-dotenv==1.2.1
 requests==2.26.0
